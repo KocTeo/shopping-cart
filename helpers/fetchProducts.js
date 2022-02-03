@@ -1,8 +1,5 @@
-const fetchProducts = async (product) => {
-    const endpoint = `https://api.mercadolibre.com/sites/MLB/search?q=${product}`;
-    const result = await fetch(endpoint);
-    const data = await result.json();
-    return data;
+const fetchProducts = () => {
+   // seu código aki
 };
 
 if (typeof module !== 'undefined') {

@@ -1,5 +1,5 @@
 const getSavedCartItems = () => {
-  localStorage.getItem('cartItems');
+  // seu código aki
 };
 
 if (typeof module !== 'undefined') {
