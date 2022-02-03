@@ -53,11 +53,10 @@ async function createListProduct() {
 }
 
 async function addCartItems(event) {
-  // acessa o elemento pai(section) e depois o primeiro filho, o próprio item clicado, porém ta undefined??
-  const item = await fetchItem(event.target.parentNode.firstChild);
-  const { id, title, price } = item; // desetrutura os elementos necessarios
-  const cartItems = document.querySelector('.cart__items'); // select ol cart
-  cartItems.appendChild(createCartItemElement({ sku: id, name: title, salePrice: price })); // insere os produtos no carrinho
+  const item = await fetchItem(event.target.parentNode.firstChild.innerText);
+  const { id, title, price } = item;
+  const cartSection = document.querySelector('.cart__items');
+  cartSection.appendChild(createCartItemElement({ sku: id, name: title, salePrice: price }));
 }
 
 window.onload = async () => {
