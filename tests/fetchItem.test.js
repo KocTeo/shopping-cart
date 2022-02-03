@@ -25,7 +25,7 @@ describe('2 - Teste a função fecthItem', () => {
     try {
       await fetchItem();
     } catch (error) {
-      expect(error).toEqual('You must provide an url');
+      expect(error).toEqual(new Error('You must provide an url'));
     }
   });
 });
