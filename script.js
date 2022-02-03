@@ -29,7 +29,8 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-
+  // remover o elemento clicado do carrinho
+  event.target.remove();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -41,13 +42,28 @@ function createCartItemElement({ sku, name, salePrice }) {
 }
 
 async function createListProduct() {
+  // seleciona a section items
   const alocateItems = document.querySelector('.items');
+  // executa a função assíncrona pra receber os dados da pesquisa
   const info = await fetchProducts('computador');
+  // percorre todos os elementos do array results adicionando a section items
   await info.results.forEach(({ id, title, thumbnail }) => {
     alocateItems.appendChild(createProductItemElement({ sku: id, name: title, image: thumbnail }));
   });
 }
 
+async function addCartItems(event) {
+  // acessa o elemento pai(section) e depois o primeiro filho, o próprio item clicado, porém ta undefined??
+  const item = await fetchItem(event.target.parentNode.firstChild);
+  const { id, title, price } = item; // desetrutura os elementos necessarios
+  const cartItems = document.querySelector('.cart__items'); // select ol cart
+  cartItems.appendChild(createCartItemElement({ sku: id, name: title, salePrice: price })); // insere os produtos no carrinho
+}
+
 window.onload = async () => {
   await createListProduct();
+  // add o botão no onload pois antes ele não existe
+  const buttonAdd = document.querySelectorAll('.item__add'); 
+  // add o evento click a todos os botões
+  buttonAdd.forEach((element) => element.addEventListener('click', addCartItems));
 };
