@@ -29,7 +29,7 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  // coloque seu código aqui
+  event.target.remove();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -57,7 +57,7 @@ async function addProductsList() {
 
 async function addProductsCart(event) {
   const cartSection = document.querySelector('.cart__items');
-  const productId = event.target.parentNode.firstChild.innerText;
+  const productId = getSkuFromProductItem(event.target.parentNode);
   const itemData = await fetchItem(productId);
   const itemCart = {
     sku: itemData.id,

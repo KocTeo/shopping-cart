@@ -1,5 +1,5 @@
-const saveCartItems = () => {
-  // seu código aki
+const saveCartItems = (cart) => {
+  localStorage.setItem('cartItems', cart);
 };
 
 if (typeof module !== 'undefined') {
