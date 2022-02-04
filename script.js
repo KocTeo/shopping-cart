@@ -55,6 +55,21 @@ async function addProductsList() {
   });
 }
 
-window.onload = () => { 
-   addProductsList();
+async function addProductsCart(event) {
+  const cartSection = document.querySelector('.cart__items');
+  const productId = event.target.parentNode.firstChild.innerText;
+  const itemData = await fetchItem(productId);
+  const itemCart = {
+    sku: itemData.id,
+    name: itemData.title,
+    salePrice: itemData.price,
+  };
+  cartSection.appendChild(createCartItemElement(itemCart));
+}
+
+window.onload = async () => { 
+   await addProductsList();
+
+   const addCartButton = document.querySelectorAll('.item__add');
+   addCartButton.forEach((button) => button.addEventListener('click', addProductsCart));
 };
