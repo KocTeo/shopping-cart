@@ -29,6 +29,8 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
+  const cart = document.querySelector('.cart__items');
+  saveCartItems(cart.innerHTML);
   event.target.remove();
 }
 
@@ -65,11 +67,16 @@ async function addProductsCart(event) {
     salePrice: itemData.price,
   };
   cartSection.appendChild(createCartItemElement(itemCart));
+  const cart = document.querySelector('ol.cart__items');
+  saveCartItems(cart.innerHTML);
 }
 
 window.onload = async () => { 
-   await addProductsList();
+  await addProductsList();
 
-   const addCartButton = document.querySelectorAll('.item__add');
+  const addCartButton = document.querySelectorAll('.item__add');
    addCartButton.forEach((button) => button.addEventListener('click', addProductsCart));
+
+  const cart = document.querySelector('ol.cart__items');
+  cart.innerHTML = getSavedCartItems();
 };
