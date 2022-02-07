@@ -30,8 +30,8 @@ function getSkuFromProductItem(item) {
 
 function cartItemClickListener(event) {
   const cart = document.querySelector('.cart__items');
-  saveCartItems(cart.innerHTML);
   event.target.remove();
+  saveCartItems(cart.innerHTML);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -79,4 +79,6 @@ window.onload = async () => {
 
   const cart = document.querySelector('ol.cart__items');
   cart.innerHTML = getSavedCartItems();
+  const cartItem = document.querySelectorAll('.cart__item');
+  cartItem.forEach((liItem) => liItem.addEventListener('click', cartItemClickListener));
 };
