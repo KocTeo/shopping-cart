@@ -1,3 +1,5 @@
+const cartSection = document.querySelector('.cart__items');
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -29,9 +31,8 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  const cart = document.querySelector('.cart__items');
   event.target.remove();
-  saveCartItems(cart.innerHTML);
+  saveCartItems(cartSection.innerHTML);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -58,7 +59,6 @@ async function addProductsList() {
 }
 
 async function addProductsCart(event) {
-  const cartSection = document.querySelector('.cart__items');
   const productId = getSkuFromProductItem(event.target.parentNode);
   const itemData = await fetchItem(productId);
   const itemCart = {
@@ -67,9 +67,15 @@ async function addProductsCart(event) {
     salePrice: itemData.price,
   };
   cartSection.appendChild(createCartItemElement(itemCart));
-  const cart = document.querySelector('ol.cart__items');
-  saveCartItems(cart.innerHTML);
+  saveCartItems(cartSection.innerHTML);
 }
+
+const emptyButton = document.querySelector('.empty-cart');
+
+emptyButton.addEventListener('click', () => {
+  cartSection.innerHTML = '';
+  saveCartItems(cartSection.innerHTML);
+});
 
 window.onload = async () => { 
   await addProductsList();
@@ -77,8 +83,8 @@ window.onload = async () => {
   const addCartButton = document.querySelectorAll('.item__add');
    addCartButton.forEach((button) => button.addEventListener('click', addProductsCart));
 
-  const cart = document.querySelector('ol.cart__items');
-  cart.innerHTML = getSavedCartItems();
+  cartSection.innerHTML = getSavedCartItems();
+
   const cartItem = document.querySelectorAll('.cart__item');
   cartItem.forEach((liItem) => liItem.addEventListener('click', cartItemClickListener));
 };
